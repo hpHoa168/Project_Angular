@@ -1,0 +1,74 @@
+.backgroundLogin {
+  background-image: url("~/imgLogin/backgroundLogin.jpeg");
+  width: 100%;
+  height: 100vh;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+// .login {
+//   position: absolute;
+//   top: 20%;
+//   left: 40%;
+//   background-color: rgb(254, 253, 253);
+//   height: 400px;
+//   width: 300px;
+//   padding: 10px;
+//   text-align: center;
+//   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+// }
+
+form.login{
+  width: 30%;
+  padding: 30px 30px;
+  border-radius: 8px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  h2{
+    text-align: center;
+  }
+  button{
+    width: 40%;
+    align-self: center;
+    &.login{
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.message {
+  background-color: rgb(212, 31, 31);
+  padding: 10px;
+  color: white;
+  border-radius: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+img{
+  margin-top: 20px;
+  width: 50px;
+  padding-left: 10px;
+}
+
+@media only screen and (max-width: 767px) {
+
+  form.login{
+    width: 90%;
+  button{
+    width: 100%;
+  }
+}
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+
+  form.login{
+   width: 50%;
+  button{
+    width: 100%;
+  }
+}
+}

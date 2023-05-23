@@ -1,0 +1,656 @@
+@import '/src/styles.scss';
+
+main.home{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    div.load-container{
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 9;
+    }
+    section.welcome{
+        background-image: linear-gradient(to right, rgba($darkBlue, 0.8) 0%, rgba($darkBlue, 0) 100%), url("https://www.themoviedb.org/t/p/w1920_and_h600_multi_faces_filter(duotone,00192f,00baff)/VlHt27nCqOuTnuX6bku8QZapzO.jpg");
+        display: flex;
+        padding: 30px 40px;
+        flex-wrap: wrap;
+        background-position: 50% 50%;
+        max-width: $maxPageWidth;
+        width: 100%;
+        &.new_index{
+            min-height: 300px;
+            max-height: 360px;
+            color: white;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        div.welcome-content{
+            height: 100%;
+            display: flex;
+            align-content: center;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: 100%;
+            div.title{
+                width: 100%;
+                margin-bottom: 20px;
+                h1{
+                    margin-bottom: 0;
+                    font-weight: 700;
+                    line-height: 1;
+                }
+                h2{
+                    margin-bottom: 0;
+                    font-weight: 600;
+                    font-size: 1.8em;
+                }
+            }
+            div.search{
+                width: 100%;
+                form{
+                    margin-top: 30px;
+                    position: relative;
+                    top: 0;
+                    left: 0;
+                    label{
+                        width: 100%;
+                        input{
+                            width: 100%;
+                            height: 46px;
+                            line-height: 46px;
+                            font-size: 1em;
+                            color: rgba(0,0,0,0.5);
+                            border: none;
+                            border-radius: 30px;
+                            padding: 10px 20px;
+                            &:focus{
+                                outline: none;
+                            }
+                            }
+                    }
+                    > input:last-child{
+                        justify-content: center;
+                        align-content: center;
+                        align-items: center;
+                        height: 46px;
+                        padding: 10px 26px;
+                        color: #fff;
+                        border: none;
+                        background: linear-gradient(to right, rgba($lightGreen, 1) 0%, rgba($lightBlue, 1) 100%);
+                        border-radius: 30px;
+                        position: absolute;
+                        top: 0;
+                        right: -1px;
+                        font-weight: 700;
+                        &:hover{
+                            color: rgba($darkBlue, 1);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    section.trending{
+        max-width: $maxPageWidth;
+        width: 100%;
+        background-image: url('https://www.themoviedb.org/assets/2/v4/misc/trending-bg-39afc2a5f77e31d469b25c187814c0a2efef225494c038098d62317d923f8415.svg');
+        background-position: 50% 200px;
+        background-size: $maxPageWidth;
+        background-repeat: no-repeat;
+        div.trending-content{
+            padding-top: 30px;
+            div.header-trending{
+                display: flex;
+                padding-left: 40px;
+                padding-right: 40px;
+                h2{
+                    margin-right: 20px;
+                    margin-bottom: 0;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                }
+                div{
+                    display: flex;
+                    align-items: center;
+                    div.type-trending{
+                        display: flex;
+                        align-items: stretch;
+                        border: 0.8px solid rgba($darkBlue, 1);
+                        border-radius: 30px;
+
+                        div.today-trending, div.week-trending{
+                            // width: 100%;
+                            position: relative;
+                            z-index: 1;
+                            a{
+                                text-decoration: none;
+                                color: black;
+                                font-weight: 600;
+                                padding: 4px 20px;
+                            }
+                            div.background{
+                                display: none;
+                                background: rgba($darkBlue, 1);
+                                border-radius: 30px;
+                                position: absolute;
+                                transition: left 0.25s;
+                                width: 100%;
+                                height: 100%;
+                                z-index: -1;
+                            }
+                            &.selected{
+                                a{
+                                    transition: left 0.25s;
+                                    background: linear-gradient(to right, #c0fecf 0%, #1ed5a9 100%);
+                                    background-clip: text;
+                                    -webkit-background-clip: text;
+                                    -webkit-text-fill-color: transparent;
+                                }
+                                div.background{
+                                    display: block;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            div.main-trending{
+                div.main-trending-content{
+                    padding-top: 20px;
+                    padding-bottom: 20px;
+                    overflow-x: scroll;
+                    overflow-y: hidden;
+                    display: flex;
+                    > div.card-trending{
+                        padding-left: 20px;
+                        min-height: 350.2px;
+                        &:first-child{
+                            padding-left: 40px;
+                        }
+                        &:last-child{
+                            padding-right: 40px;
+                        }
+                        div.image-card{
+                            width: 150px;
+                            min-width: 150px;
+                            position: relative;
+
+                            img{
+                                border-radius: 5px;
+                                width: 100%;
+                            }
+                            div.circle-progress{
+                                position: absolute;
+                                bottom: -17px;
+                                left: 8px;
+                            }
+                        }
+
+                        div.content-card{
+                            padding: 26px 10px 12px 10px;
+                            a{
+                                text-decoration: none;
+                                font-weight: 600;
+                                color: black;
+                                font-size: 1em;
+                                &:last-child(){
+                                    color: black;
+                                }
+                                &:hover{
+                                    color: rgba($lightBlue, 1);
+                                }
+                            }
+                            h4{
+                                color: rgba(0,0,0,0.6);
+                                font-size: 1em;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    section.trailer{
+        max-width: $maxPageWidth;
+        width: 100%;
+        // background-image: url("https://www.themoviedb.org/t/p/w1920_and_h427_multi_faces/mAJ84W6I8I272Da87qplS2Dp9ST.jpg");
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        color: #fff;
+        transition: all 0.5s;
+        div.trailer-content{
+            padding-top: 30px;
+            background:  linear-gradient(to right, rgba($darkBlue, 0.75) 0%, rgba($darkBlue, 0.75) 100%);;
+            div.header-trailer{
+                display: flex;
+                padding-left: 40px;
+                padding-right: 40px;
+                h2{
+                    margin-right: 20px;
+                    margin-bottom: 0;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                }
+                div{
+                    display: flex;
+                    align-items: center;
+                    div.type-trailer{
+                        display: flex;
+                        align-items: stretch;
+                        border: 0.8px solid rgba($lightGreen, 1);;
+                        border-radius: 30px;
+
+                        div.tv-trailer, div.theater-trailer{
+                            position: relative;
+                            z-index: 1;
+                            a{
+                                text-decoration: none;
+                                color: white;
+                                font-weight: 600;
+                                padding: 4px 20px;
+                            }
+                            div.background{
+                                display: none;
+                                background: linear-gradient(to right, rgba($lighterGreen, 1) 0%, rgba($lightGreen, 1) 100%);
+                                border-radius: 30px;
+                                position: absolute;
+                                transition: left 0.25s;
+                                width: 100%;
+                                height: 100%;
+                                z-index: -1;
+                            }
+                            &.selected{
+                                a{
+                                    transition: left 0.25s;
+                                    background: rgba($darkBlue, 1);                                    background-clip: text;
+                                    -webkit-background-clip: text;
+                                    -webkit-text-fill-color: transparent;
+                                }
+                                div.background{
+                                    display: block;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            div.main-trailer{
+                div.main-trailer-content{
+                    padding-top: 20px;
+                    padding-bottom: 20px;
+                    overflow-x: scroll;
+                    overflow-y: hidden;
+                    display: flex;  
+                    div.trailer-card{
+                        padding-left: 20px;
+                        min-height: 226.21px;
+                        &:first-child{
+                            padding-left: 40px;
+                        }
+                        &:last-child{
+                            padding-right: 40px;
+                        }
+                        div.image-card{
+                            position: relative;
+                            transition: all .2s ease-in-out;
+
+                            &:hover{
+                                transform: scale(1.05);
+                                cursor: pointer;
+                            }
+                            a{
+                                img{
+                                    border-radius: 8px;
+                                    width: 300px;
+                                }
+                            }
+                            div.play{
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                font-size: 4em;
+                                position: absolute;
+                                height: calc(300px / 1.78);;
+                                width: 300px;
+                                top: 0;
+                                left: 0;
+                                &:hover{
+                                    transform: scale(1.05);
+                                }
+                                span{
+                                    background-image: url("https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-175-play-806cb05551791b8dedd7f8d38fd3bd806e2d397fcfeaa00a5cc9129f0819fd07.svg");
+                                    transition: all .2s ease-in-out;
+                                    filter: invert(1);
+                                    display: inline-flex;
+                                    width: 1em;
+                                    height: 1em;
+                                }
+                            }
+                        }
+                        div.content-card{
+                            display: flex;
+                            flex-direction: column;
+                            // align-items: center;
+                            margin-top: 10px;
+                            text-align: center;
+                            a{
+                                // font-size: 1.2em;
+                                // text-decoration: none;
+                                // color: white;
+                                text-decoration: none;
+                                font-weight: 600;
+                                color: white;
+                                font-size: 1em;
+                                &:last-child(){
+                                    color: black;
+                                }
+                                &:hover{
+                                    color: rgba($lightBlue, 1);
+                                }
+                            }
+                            h4{
+                                // font-size: 1em;
+                                // font-weight: 400;
+                                color: white;
+                                font-size: 1em;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+    section.video{
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        z-index: 99;
+        background-color: rgba(#000, 0.5);
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .title-video{
+            width: 70.7%;
+            display: flex;
+            justify-content: space-between;
+            background-color: #000;
+            padding: 16px 16px;
+            h2{
+                font-size: 1.2em;
+                color: white;
+                margin-bottom: 0;
+                font-weight: 0;
+            }
+            button{
+                background-color: #000;
+                img{
+                    width: 15px;
+                    filter: invert(1);
+                }
+            }
+        }
+        // iframe{
+        //     width: 70.7%;
+        //     height: 84.1%;
+        // }
+        ::ng-deep youtube-player{
+            width: 70.7%;
+            height: 84.1%;
+            iframe{
+                width: 100% !important;
+                height: 100% !important;
+            }
+        }
+        .none-video{
+            width: 70.7%;
+            height: 84.1%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            color: #000;
+            h2{
+                margin-bottom: 0;
+                text-align: center;
+            }
+        }
+    }
+    section.popular{
+        max-width: $maxPageWidth;
+        width: 100%;
+        background-size: $maxPageWidth;
+        div.popular-content{
+            padding-top: 30px;
+            div.header-popular{
+                display: flex;
+                padding-left: 40px;
+                padding-right: 40px;
+                h2{
+                    margin-right: 20px;
+                    margin-bottom: 0;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                }
+                div{
+                    display: flex;
+                    align-items: center;
+                    div.type-popular{
+                        display: flex;
+                        border: 0.8px solid rgba($darkBlue, 1);
+                        border-radius: 30px;
+
+                        div.today-popular, div.week-popular{
+                            position: relative;
+                            z-index: 1;
+                            a{
+                                text-decoration: none;
+                                color: black;
+                                font-weight: 600;
+                                padding: 4px 20px;
+                            }
+                            div.background{
+                                display: none;
+                                background: rgba($darkBlue, 1);
+                                border-radius: 30px;
+                                position: absolute;
+                                transition: left 0.25s;
+                                width: 100%;
+                                height: 100%;
+                                z-index: -1;
+                            }
+                            &.selected{
+                                a{
+                                    transition: left 0.25s;
+                                    background: linear-gradient(to right, #c0fecf 0%, #1ed5a9 100%);
+                                    background-clip: text;
+                                    -webkit-background-clip: text;
+                                    -webkit-text-fill-color: transparent;
+                                }
+                                div.background{
+                                    display: block;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            div.main-popular{
+                div.main-popular-content{
+                    padding-top: 20px;
+                    padding-bottom: 20px;
+                    overflow-x: scroll;
+                    overflow-y: hidden;
+                    display: flex;
+                    div.card-popular{
+                        min-height: 350.2px;
+                        padding-left: 20px;
+                        &:first-child{
+                            padding-left: 40px;
+                        }
+                        &:last-child{
+                            padding-right: 40px;
+                        }
+                        div.image-card{
+                            width: 150px;
+                            min-width: 150px;
+                            position: relative;
+                            img{
+                                border-radius: 5px;
+                                width: 100%;
+                            }
+                            div.circle-progress{
+                                position: absolute;
+                                bottom: -17px;
+                                left: 8px;
+                            }
+                        }
+                        div.content-card{
+                            padding: 26px 10px 12px 10px;
+                            a{
+                                text-decoration: none;
+                                font-weight: 600;
+                                color: black;
+                                font-size: 1em;
+                                &:last-child(){
+                                    color: black;
+                                }
+                                &:hover{
+                                    color: rgba($lightBlue, 1);
+                                }
+                            }
+                            h4{
+                                color: rgba(0,0,0,0.6);
+                                font-size: 1em;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 767px){
+    main.home{
+        section.welcome{
+            padding: 20px;
+            div.welcome-content{
+            div.title{
+                h1{
+                    font-size: 2.8em;
+                }
+            }
+            // div.search{
+            //     form{
+            //         label{
+            //             input::-webkit-input-placeholder{
+            //                 content: "313";
+            //             }
+            //         }
+            //     }
+            // }
+        }
+        }
+        section.trending{
+            div.trending-content{
+                div.header-trending{
+                    flex-direction: column;
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    h2{
+                        margin-right: 0;
+                        margin-bottom: 10px;
+                    }
+                }
+                div.main-trending{
+                    div.main-trending-content{
+                        > div.card-trending{
+                            &:first-child{
+                                padding-left: 20px;
+                            }
+                            &:last-child{
+                                padding-right: 20px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        section.trailer{
+            div.trailer-content{
+                div.header-trailer{
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    flex-direction: column;
+                    h2{
+                        margin-right: 0;
+                        margin-bottom: 10px;
+                    }
+                }
+                div.main-trailer{
+                    div.main-trailer-content{
+                        div.trailer-card{
+                            &:first-child{
+                                padding-left: 20px;
+                            }
+                            &:last-child{
+                                padding-right: 20px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        section.video{
+            .title-video{
+                width: 90%;
+            }
+            ::ng-deep youtube-player{
+                width: 90%;
+                height: 40%;
+                iframe{
+                    width: 100% !important;
+                    height: 100% !important;
+                }
+            }
+            .none-video{
+                width: 90%;
+                height: 40%;
+            }
+        }
+        section.popular{
+            div.popular-content{
+                div.header-popular{
+                    flex-direction: column;
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    h2{
+                        margin-right: 0;
+                        margin-bottom: 10px;
+                    }
+                }
+                div.main-popular{
+                    div.main-popular-content{
+                        div.card-popular{
+                            &:first-child{
+                            padding-left: 20px;
+                            }
+                            &:last-child{
+                                padding-right: 20px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

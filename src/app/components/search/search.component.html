@@ -1,0 +1,65 @@
+<section class="search-content">  
+    <div class="search-results" *ngIf="contentSearch?.length !== 0">
+        <h2>Search Results</h2>
+        <div class="type-search">
+            <ul>
+                <li title="Movies" [ngClass]="{'choose' : type === 'movie'}" (click)="chooseType('movie')">
+                    <a >Movies</a>
+                    <span>{{totalMovie}}</span>
+                </li>
+                <li title="TV Shows" [ngClass]="{'choose' : type === 'tv'}" (click)="chooseType('tv')">
+                    <a >TV Shows</a>
+                    <span>{{totalTV}}</span>
+                </li>
+                <li title="People" [ngClass]="{'choose' : type === 'people'}" (click)="chooseType('people')">
+                    <a >People</a>
+                    <span>{{totalPeople}}</span>
+                </li>
+                </ul>
+        </div>
+    </div>
+    <div class="main-content" *ngIf="contentSearch?.length !== 0; else NotFound">
+        <div class="movie-card" [ngClass]="{'people': type === 'people'}" *ngFor="
+            let item of contentSearch
+            | paginate
+            : {
+                itemsPerPage: 1,
+                currentPage: pagination,
+                totalItems: totalPage
+              }
+            ">
+            <div class="poster" *ngIf=" type !== 'people'; else PeopleData" >
+                <img [routerLink]="['',type,item.id]" [src]="[item.poster_path ? 'https://www.themoviedb.org/t/p/w94_and_h141_bestv2/' + item.poster_path : imgNotFound]" alt="poster">
+            </div>
+            <ng-template #PeopleData>
+                <div class="poster people" >
+                    <img [routerLink]="['',type,item.id]" [src]="[item.profile_path ? 'https://www.themoviedb.org/t/p/w90_and_h90_face/' + item.profile_path : imgNotFound]" alt="poster">
+                </div>
+            </ng-template>
+            <div class="preview-movie" *ngIf=" type !== 'people'; else PeoplePreview">
+                <h3><a [routerLink]="['',type,item.id]">{{item.original_title ? item.original_title : item.name}}</a></h3>
+                <h4>{{item.release_date ? item.release_date : item.first_air_date}}</h4>
+                <p>{{item.overview}}</p>
+            </div>
+            <ng-template #PeoplePreview>
+                <div class="preview-movie people">
+                    <h3><a [routerLink]="['',type,item.id]">{{item.original_title ? item.original_title : item.name}}</a></h3>
+                    <ul>
+                        <li>{{item.known_for_department}}</li>
+                        <li><p *ngFor="let movie of item.known_for">{{movie.title ? movie.title : movie.name}},</p></li>
+                    </ul>
+                </div>
+            </ng-template>
+        </div>
+        <div class="d-flex justify-content-center pagination">
+            <pagination-controls
+              (pageChange)="renderPage($event)"
+            ></pagination-controls>
+        </div>
+    </div>
+    <ng-template #NotFound>
+        <div class="not-found">
+            <p>There are no movies that matched your query.</p>
+        </div>
+    </ng-template>
+</section>

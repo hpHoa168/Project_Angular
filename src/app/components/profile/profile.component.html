@@ -1,0 +1,84 @@
+<div>
+  <div class="background-img d-flex justify-content-center align-items-center">
+    <div class="profile d-flex justify-content-center align-items-center">
+      <img class="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Z7CiJarJs_gBDxtL938UYbHahvqR4jAhRQ&usqp=CAU"/>
+      <div class="info">
+        <div class="d-flex flex-column">
+          <h4 class="m-0">hoang4326</h4>
+          <h6 class="m-0" >Member since May 2023</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ul class="nav justify-content-center">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/profile/favorite">Favorites</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/profile/rated">Ratings</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/profile/watchlist">Watchlist</a>
+    </li>
+  </ul>
+  <div class="movie-list w-100 p-5">
+    <div class="title-group d-flex ">
+      <div class="d-flex justify-content-center align-items-center">
+        <h4>My {{ type }}</h4>
+        <div class="d-flex">
+          <div class="movie-type" [ngClass]="{'choose': movieOrTV === 'movies'}" (click)="changeMovieTV('movies')">Movies</div>
+          <div class="tv-type" [ngClass]="{'choose': movieOrTV === 'tv'}" (click)="changeMovieTV('tv')">TV</div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="movies?.length == 0">
+            <h5>Your list is empty</h5>
+    </div>
+
+    <div class="movie d-flex" *ngFor="let item of movies">
+      <img
+        src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{{
+          item.poster_path
+        }}"
+        alt=""
+      />
+      <div class="m-1 p-2">
+        <div class="d-flex m-3">
+          <div>
+              <circle-progress
+              [percent]="item.vote_average * 10"
+              [outerStrokeColor]=" item.vote_average * 10 > 70 ? '#21D07A' : item.vote_average * 10 < 40 ? '#DB2360': item.vote_average * 10 === 0 ? '#666666' :'#D2D531'"
+              [innerStrokeColor]="item.vote_average * 10 > 70 ? '#204529' : item.vote_average * 10 < 40 ? '#571435': item.vote_average * 10 === 0 ? '#666666' :'#423D0F'" 
+            ></circle-progress>
+          </div>
+          <div class="d-flex flex-column mx-3">
+            <h5>{{ item.title || item.name }}</h5>
+            <span>{{ item.release_date }}</span>
+          </div>
+        </div>
+        <div class="m-3">{{ item.overview }}</div>
+        <div class="d-flex flex-row m-3">
+          <div class="text-center">
+            <button class="icons-btn">
+              <i class="bi bi-star"></i></button
+            >Your Rating
+            <button
+              class="icons-btn favorite-icon"
+              (click)="removeFavorite(item.id)"
+            >
+              <i class="bi bi-heart"></i>
+            </button>
+            Your Favorite
+            <button class="icons-btn">
+              <i class="bi bi-list"></i></button
+            >Add To Watchlist
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div *ngIf="removeFavoriteMessage" class="message">
+          {{ removeFavoriteMessage }}
+        </div>
+</div>

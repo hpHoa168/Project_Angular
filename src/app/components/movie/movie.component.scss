@@ -1,0 +1,95 @@
+.sort-bar {
+  width: 260px;
+  padding: 10px;
+
+  .sort {
+    border: 1px solid gainsboro;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .sort-title {
+    cursor: pointer;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 1.25em;
+  }
+
+  p {
+    border-top: 1px solid gainsboro;
+    padding: 10px;
+    color: #afafaf;
+  }
+}
+
+img {
+  width: 220px;
+  height: 330px;
+  object-fit: cover;
+}
+
+// .item-movie {
+//   background-color: antiquewhite;
+// }
+
+.loading {
+  .ske-loading {
+    width: 220px;
+    height: 400px;
+    background-color: #dcdcdc;
+    border-radius: 5px;
+  }
+}
+
+.btn-search {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+
+  button {
+    color: white;
+
+    &:hover {
+      color: black;
+    }
+  }
+}
+
+.item-movie {
+
+  .shadow {
+    position: relative;
+  }
+
+  a {
+    height: 100%;
+    width: 220px;
+    border-radius: 10px;
+  }
+  img {
+    border-radius: 10px 10px 0 0;
+    object-fit: cover;
+  }
+
+  .title {
+    padding: 10px;
+
+    .movie-name {
+      font-weight: 600;
+      color: black;
+    }
+    .date {
+      color: #afafaf;
+    }
+  }
+}
+
+div.circle-progress {
+  position: absolute;
+  bottom: 20%;
+  left: 5%;
+}

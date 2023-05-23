@@ -1,0 +1,69 @@
+<div class="d-flex peopleDetails w-100">
+    <div>
+        <div class="info">
+            <img [src]="[ peopleDetails?.profile_path ? 'https://www.themoviedb.org/t/p/w470_and_h470_face/' + peopleDetails?.profile_path : imgNotFound ]"
+                alt="">
+            <div class="iconInfo">
+                <i class="bi bi-facebook"></i>
+                <i class="bi bi-twitter"></i>
+                <i class="bi bi-instagram"></i>
+            </div>
+            <h4>Personal Info</h4>
+            <div class="peopleInfo">
+                <strong>Know For</strong>
+                <p>{{peopleDetails.known_for_department}}</p>
+                <strong class="titleInfo">Know Credits</strong>
+                <p>{{peopleMovies.cast.length}}</p>
+                <strong class="titleInfo">Gender</strong>
+                <p>{{peopleDetails.gender == 1 ? "Female" : "Male"}}</p>
+                <strong class="titleInfo">Birthday</strong>
+                <p>{{peopleDetails.birthday}}</p>
+                <strong class="titleInfo">Place of Birth</strong>
+                <p>{{peopleDetails.place_of_birth}}</p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h2>{{peopleDetails.name}}</h2>
+        <div>
+            <h4>Biography</h4>
+            <p>{{peopleDetails.biography}}</p>
+        </div>
+        <div>
+            <h5>Know For</h5>
+            <section class="popular">
+                <div class="popular-content">
+                    <div class="main-popular">
+                        <div class="main-popular-content">
+                            <div class="card-popular" *ngFor="let items of peopleMovies.cast">
+                                <div class="image-card">
+                                    <a routerLink="/movie/{{ items.id }}">
+                                        <img src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{{items.poster_path}}"
+                                            alt="">
+                                    </a>
+                                </div>
+                                <div class="content-card">
+                                    <a routerLink="/movie/{{ items.id }}">{{items.original_title}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+        </div>
+        <div class="peopleActing">
+            <h4>Acting</h4>
+            <div class="d-flex peopleCredits">
+                <div>
+                    <p *ngFor="let items of peopleMovies.cast">{{items.release_date}}<br></p>
+                </div>
+                <div>
+                    <strong><p *ngFor="let items of peopleMovies.cast"><a routerLink="/movie/{{ items.id }}">{{items.original_title}}<br></a></p></strong>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

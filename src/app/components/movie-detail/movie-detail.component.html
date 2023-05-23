@@ -1,0 +1,490 @@
+<ng-container *ngIf="response === true">
+  <div class="overlay" *ngIf="!isHidden">
+    <button (click)="hideElement('hide')">X</button>
+  </div>
+
+  <div class="movie-detail-header">
+    <div class="dropdown">
+      <button class="dropbtn">
+        Overview
+        <i class="bi bi-caret-down-fill"></i>
+      </button>
+      <div class="dropdown-content">
+        <a href="#">Main</a>
+        <a href="#">Alternative Titles</a>
+        <a href="#">Cast & Crew</a>
+        <a href="#">Release Dates</a>
+        <a href="#">Translations</a>
+        <a href="#">Changes</a>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button class="dropbtn">
+        Media
+        <i class="bi bi-caret-down-fill"></i>
+      </button>
+      <div class="dropdown-content">
+        <a href="#">Backdrops</a>
+        <a href="#">Logos</a>
+        <a href="#">Posters</a>
+        <a href="#">Video</a>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button class="dropbtn">
+        Share
+        <i class="bi bi-caret-down-fill"></i>
+      </button>
+      <div class="dropdown-content">
+        <a href="#">Share Link</a>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="movie-detail-info"
+    style="background-image: url('https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/{{movieInfo.backdrop_path}}');"
+  >
+    <div class="single_column">
+      <div class="content">
+        <div *ngIf="addFavoriteMessage" class="message">
+          {{ addFavoriteMessage }}
+        </div>
+
+        <div class="movie-detai-poster">
+          <img
+            *ngIf="movieInfo.poster_path; else elsePoster"
+            src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{{
+              movieInfo.poster_path
+            }}"
+            alt=""
+          />
+          <ng-template #elsePoster>
+            <img
+              src="https://api-private.atlassian.com/users/90f6c03f7f1bc202cfb56097d2d794a9/avatar"
+              alt="image"
+            />
+          </ng-template>
+        </div>
+
+        <div class="movie-detail-content">
+          <div class="movie-detai-title">
+            <h2 style="padding-right: 10px">{{ movieInfo.original_title }}</h2>
+            <h2>({{ movieInfo.release_date | date : "yyyy" }})</h2>
+          </div>
+
+          <div class="movie-facts">
+            <span class="movie-release">
+              {{ movieInfo.release_date | date : "dd" }}/
+              {{ movieInfo.release_date | date : "MM" }}/
+              {{ movieInfo.release_date | date : "yyyy" }}
+            </span>
+
+            <span class="movie-release">
+              <span> - </span>
+              <ng-container
+                *ngFor="let genre of movieInfo.genres; let last = last"
+              >
+                {{ genre.name }}<ng-container *ngIf="!last">, </ng-container>
+              </ng-container>
+              <span> - </span>
+            </span>
+
+            <span class="movie-release">
+              {{ formatRuntime(movieInfo.runtime) }}
+            </span>
+          </div>
+
+          <div class="movie-detail-action">
+            <div class="movie-detail-percents">
+              <div>
+                <circle-progress
+                  [percent]="movieInfo.vote_average * 10"
+                  [radius]="30"
+                  [unitsFontSize]="'15'"
+                  [titleFontSize]="'25'"
+                  [outerStrokeWidth]="4"
+                  [outerStrokeColor]="
+                    movieInfo.vote_average * 10 > 70
+                      ? '#21D07A'
+                      : movieInfo.vote_average * 10 < 40
+                      ? '#DB2360'
+                      : movieInfo.vote_average * 10 === 0
+                      ? '#666666'
+                      : '#D2D531'
+                  "
+                  [innerStrokeColor]="
+                    movieInfo.vote_average * 10 > 70
+                      ? '#204529'
+                      : movieInfo.vote_average * 10 < 40
+                      ? '#571435'
+                      : movieInfo.vote_average * 10 === 0
+                      ? '#666666'
+                      : '#423D0F'
+                  "
+                ></circle-progress>
+              </div>
+              <div class="user-score">
+                <span
+                  >User <br />
+                  Score</span
+                >
+              </div>
+            </div>
+
+            <div *ngIf="!isFavorite; else notFav" class="movie-detai-item" (click)="addFavorite()">
+              <i class="bi bi-heart"></i>
+            </div>
+            <ng-template #notFav  >
+                <div class="fav-detail-item" (click)="addFavorite()">
+              <i class="bi bi-heart"></i>
+            </div>
+            </ng-template>
+
+            <div
+              class="movie-detai-play"
+              (click)="hideElement('true')"
+              *ngIf="getTrailer(movieInfo.videos.results) !== false"
+            >
+              <i class="bi bi-play-fill"></i>
+
+              <span>Play Trailer</span>
+            </div>
+          </div>
+
+          <div class="header-info">
+            <div class="tagline">
+              <span>{{ movieInfo.tagline }}</span>
+            </div>
+
+            <div class="movie-detai-overview">
+              <h3>Overview</h3>
+            </div>
+
+            <div class="movie-detai-description">
+              <span>{{ movieInfo.overview }}</span>
+            </div>
+
+            <div class="people">
+              <ng-container *ngFor="let crew of castInfo.crew">
+                <div class="people-item" *ngIf="crew.job === 'Characters'">
+                  <ng-container>
+                    <span>{{ crew.name }}</span>
+                    <span>Characters</span>
+                  </ng-container>
+                </div>
+              </ng-container>
+
+              <ng-container *ngFor="let crew of castInfo.crew">
+                <div class="people-item" *ngIf="crew.job === 'Director'">
+                  <ng-container>
+                    <span>{{ crew.name }}</span>
+                    <span>Director</span>
+                  </ng-container>
+                </div>
+              </ng-container>
+
+              <ng-container *ngFor="let crew of castInfo.crew">
+                <div class="people-item" *ngIf="crew.job === 'Screenplay'">
+                  <ng-container>
+                    <span>{{ crew.name }}</span>
+                    <span>Screenplay</span>
+                  </ng-container>
+                </div>
+              </ng-container>
+
+              <ng-container *ngFor="let crew of castInfo.crew">
+                <div class="people-item" *ngIf="crew.job === 'Writer'">
+                  <ng-container>
+                    <span>{{ crew.name }}</span>
+                    <span>Writer</span>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="billed-cast">
+    <h2 style="justify-content: left">Top Billed Cast</h2>
+    <div class="billed-cast-content">
+      <div class="movie-detai-cast-info">
+        <div class="movie-detai-cast">
+          <div
+            class="movie-actor-item"
+            *ngFor="let cast of castInfo.cast; let last = last"
+          >
+            <a routerLink="/people/{{cast.id}}">
+              <img
+                *ngIf="cast.profile_path; else elseBlock"
+                src="https://www.themoviedb.org/t/p/w220_and_h330_face/{{
+                  cast.profile_path
+                }}"
+                alt=""
+              />
+              <ng-template #elseBlock>
+                <img
+                  src="https://api-private.atlassian.com/users/90f6c03f7f1bc202cfb56097d2d794a9/avatar"
+                  alt="image"
+                />
+              </ng-template>
+            </a>
+            <span>{{ cast.name }}</span>
+            <span>{{ cast.character }}</span>
+          </div>
+        </div>
+
+        <div class="movie-media-detail">
+          <div class="movie-media-header">
+            <h4>Media</h4>
+            <div>
+              <h5
+                [ngClass]="{ active: isActive('Most popular') }"
+                (click)="setActive('Most popular')"
+              >
+                Most popular
+              </h5>
+              <h5
+                [ngClass]="{ active: isActive('Backdrops') }"
+                (click)="setActive('Backdrops')"
+              >
+                Backdrops
+              </h5>
+              <h5
+                [ngClass]="{ active: isActive('Trailer') }"
+                (click)="setActive('Trailer')"
+              >
+                Trailer
+              </h5>
+              <h5
+                [ngClass]="{ active: isActive('Teaser') }"
+                (click)="setActive('Teaser')"
+              >
+                Teaser
+              </h5>
+              <h5
+                [ngClass]="{ active: isActive('Other') }"
+                (click)="setActive('Other')"
+              >
+                Other
+              </h5>
+            </div>
+          </div>
+
+          <div class="movie-media-content">
+            <div
+              class="movie-media-cast"
+              *ngIf="isActive('Most popular')"
+              style="border-radius: 10px"
+            >
+              <div class="movie-media-item">
+                <div>
+                  <img
+                    src="https://www.themoviedb.org/t/p/w533_and_h300_bestv2/{{
+                      movieInfo.backdrop_path
+                    }}"
+                    alt=""
+                  />
+                </div>
+              </div>
+
+              <div class="movie-media-item">
+                <div>
+                  <img
+                    src="https://www.themoviedb.org/t/p/w220_and_h330_face/{{
+                      movieInfo.poster_path
+                    }}"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="movie-media-cast"
+              *ngIf="isActive('Backdrops')"
+              style="border-radius: 10px"
+            >
+              <div class="movie-media-item">
+                <div>
+                  <img
+                    src="https://www.themoviedb.org/t/p/w533_and_h300_bestv2/{{
+                      movieInfo.belongs_to_collection.backdrop_path
+                    }}"
+                    alt=""
+                  />
+                </div>
+              </div>
+
+              <div class="movie-media-item">
+                <div>
+                  <img
+                    src="https://www.themoviedb.org/t/p/w220_and_h330_face/{{
+                      movieInfo.belongs_to_collection.poster_path
+                    }}"
+                    alt=""
+                  />
+                </div>
+              </div>
+
+              <div class="movie-media-item">
+                <div>
+                  <img
+                    src="https://www.themoviedb.org/t/p/w533_and_h300_bestv2/{{
+                      movieInfo.backdrop_path
+                    }}"
+                    alt=""
+                  />
+                </div>
+              </div>
+
+              <div class="movie-media-item">
+                <div>
+                  <img
+                    src="https://www.themoviedb.org/t/p/w220_and_h330_face/{{
+                      movieInfo.poster_path
+                    }}"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-media-cast" *ngIf="isActive('Trailer')">
+              <div
+                class="movie-media-item"
+                *ngFor="let trailer of movieInfo.videos.results"
+              >
+                <div *ngIf="trailer.type === 'Trailer'">
+                  <iframe
+                    width="560"
+                    height="315"
+                    [src]="getEmbeddedVideoUrl(trailer.key)"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-media-cast" *ngIf="isActive('Teaser')">
+              <div
+                class="movie-media-item"
+                *ngFor="let teaser of movieInfo.videos.results"
+              >
+                <div *ngIf="teaser.type === 'Teaser'">
+                  <iframe
+                    width="560"
+                    height="315"
+                    [src]="getEmbeddedVideoUrl(teaser.key)"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-media-cast" *ngIf="isActive('Other')">
+              <div
+                class="movie-media-item"
+                *ngFor="let other of movieInfo.videos.results"
+              >
+                <div
+                  *ngIf="other.type !== 'Teaser' && other.type !== 'Trailer'"
+                >
+                  <iframe
+                    width="560"
+                    height="315"
+                    [src]="getEmbeddedVideoUrl(other.key)"
+                    title="YouTube video player"
+                    frameborder="0"
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="movie-more-info">
+        <div class="movie-social">
+          <i class="bi bi-facebook"></i>
+          <i class="bi bi-twitter"></i>
+          <i class="bi bi-instagram"></i>
+        </div>
+
+        <div class="movie-info-other">
+          <div class="movie-info-other-item">
+            <span><b>Original Title</b></span>
+            <span>{{ movieInfo.original_title }}</span>
+          </div>
+
+          <div class="movie-info-other-item">
+            <span><b>Status</b></span>
+            <span>{{ movieInfo.status }}</span>
+          </div>
+
+          <div class="movie-info-other-item">
+            <span><b>Original Language</b></span>
+            <span>
+              <ng-container
+                *ngFor="
+                  let language of movieInfo.spoken_languages;
+                  let last = last
+                "
+              >
+                {{ language.english_name
+                }}<ng-container *ngIf="!last">, </ng-container>
+              </ng-container>
+            </span>
+          </div>
+
+          <div class="movie-info-other-item">
+            <span><b>Budget</b></span>
+            <span>
+              <ng-container *ngIf="movieInfo.budget === 0">-</ng-container>
+              <ng-container *ngIf="movieInfo.budget !== 0"
+                >${{ movieInfo.budget | number : "1.2-2" }}</ng-container
+              >
+            </span>
+          </div>
+
+          <div class="movie-info-other-item">
+            <span><b>Revenue</b></span>
+            <span>
+              <ng-container *ngIf="movieInfo.revenue === 0">-</ng-container>
+              <ng-container *ngIf="movieInfo.revenue !== 0"
+                >${{ movieInfo.revenue | number : "1.2-2" }}</ng-container
+              >
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="video-container" *ngIf="!isHidden">
+    <iframe
+      width="100%"
+      height="100%"
+      [src]="getTrailer(movieInfo.videos.results)"
+      title="YouTube video player"
+    ></iframe>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="response !== true">
+  <div style="height: 60vh; margin: 30px">
+    <h2>Oops! We can't find the page you're looking for</h2>
+    <span>You tried to request a page that doesn't exist.</span>
+  </div>
+</ng-container>

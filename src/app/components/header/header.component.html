@@ -1,0 +1,53 @@
+<header>
+  <nav>
+    <div class="nav-left">
+        <div>
+          <a routerLink="/home"><img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" alt="logo"></a>
+          <a (click)="toggleNavbar()"><img src="../../../assets/image/menu.png" alt=""></a>
+        </div>
+        <ul [ngClass]="{'show': isNavbarExpanded}">
+          <li>
+            <a routerLink="/movie">Movies</a>
+          </li>
+          <li>
+            <a routerLink="/tv">TV Shows</a>
+          </li>
+          <li><a routerLink="/people">People</a></li>
+          <!-- <li><a routerLink="/#">More</a></li> -->
+        </ul>
+
+    </div>
+    <div class="nav-right" [ngClass]="{'show': isNavbarExpanded}">
+        <ul>
+          <li><a routerLink="/#"><img src="https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-371-plus-white-0bac34f16124808a12ea863b4d9cc6e599dee7c0a80658cfe9ead26939e64517.svg" alt="plus"></a></li>
+          <li [ngStyle]="getStyle()"><a routerLink="/login">Login</a></li>
+          <li><a routerLink="/#"><img src="https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-441-bell-9cd2af257b98c4af3460078777d8e38a5e12bca89704eeac2f39273afcbd06ff.svg" style="filter: invert(1);" alt="bell"></a></li>
+          <li *ngIf="isLogin">
+              <a (click)="profile()">
+                <!-- <span>H</span> -->
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Z7CiJarJs_gBDxtL938UYbHahvqR4jAhRQ&usqp=CAU"/>
+                <div *ngIf="isProfile">
+                  <div class="triangle"></div>
+                  <ul>
+                      <li>
+                        <a routerLink="/profile/favorite">hoang4326</a>
+                        <a routerLink="/profile/favorite">View profile</a>
+                      </li>
+                      <li><a routerLink="/login" (click)="logOut()">Logout</a></li>
+                  </ul>
+                </div>
+              </a>
+          </li>
+          <li [ngStyle]="filterType()"><a (click)="searchMovie()"><img [src]="[isSearch ? closeSearch : openSearch]"  alt="magnificent"></a></li>
+        </ul>
+    </div>
+</nav>
+<div class="main-search" *ngIf="isSearch">
+  <section class="search">
+    <div>
+      <img src="./assets/image/search-icon.png" alt="magnificent">
+      <input type="text" placeholder="Search for a movie" [(ngModel)]="searchWord" (ngModelChange)="onValueChange($event)">
+    </div>
+  </section>
+</div>
+</header>

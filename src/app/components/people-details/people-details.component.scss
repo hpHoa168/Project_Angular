@@ -1,0 +1,165 @@
+.peopleDetails{
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    padding: 50px;
+    .info img{
+        width: 300px;
+        height: 450px;
+        border-radius: 10px;
+        object-fit: fill;
+    }
+    .info{
+        padding-right: 30px;
+        .iconInfo{
+            padding: 20px 0 20px 0px;
+            i{
+                font-size: 30px;
+                margin-right: 10px;
+            }
+        } 
+    }
+    h4, h5, h3{
+        padding-top: 10px;
+        font-family: 'Source Sans Pro', Arial, sans-serif;
+    }
+    strong{
+        font-family: 'Source Sans Pro', Arial, sans-serif;
+    }
+    .peopleInfo p{
+        padding-bottom: 20px;
+        font-size: 1em;
+        color: rgb(80, 78, 78);
+    }
+    a{
+        text-decoration: none;
+        color: black;
+        font-size: 15px;
+        &:last-child(){
+            color: black;
+        }
+        &:hover{
+            color: rgb(179, 231, 245);
+        }
+    }
+    .peopleActing{
+        padding-top: 20px;
+    }
+    .peopleCredits{
+        width: 100%;
+        margin: 0;
+        border-collapse: separate;
+        border: 1px solid #dedede;
+    }
+    .peopleCredits p{
+        padding: 10px 20px 10px ;
+    }
+}
+
+section.popular{
+    max-width: 930px;
+    width: 100%;
+    background-size: 930px;
+    div.popular-content{
+        div.header-popular{
+            display: flex;
+            padding-left: 40px;
+            padding-right: 40px;
+            h2{
+                margin-right: 20px;
+                margin-bottom: 0;
+                font-size: 1.5rem;
+                font-weight: 600;
+            }
+            
+        }
+        div.main-popular{
+            div.main-popular-content{
+                padding-top: 10px;
+                padding-bottom: 10px;
+                overflow-x: scroll;
+                overflow-y: hidden;
+                display: flex;
+                div.card-popular{
+                    // min-height: 250px;
+                    padding-right: 20px;
+                    div.image-card{
+                        width: 150px;
+                        min-width: 150px;
+                        position: relative;
+                        img{
+                            border-radius: 5px;
+                            width: 100%;
+                        }
+                        div.circle-progress{
+                            position: absolute;
+                            bottom: -17px;
+                            left: 8px;
+                        }
+                    }
+                    div.content-card{
+                        text-align: center;
+                        padding-top: 10px;
+                        a{
+                            text-decoration: none;
+                            color: black;
+                            font-size: 15px;
+                            &:last-child(){
+                                color: black;
+                            }
+                            &:hover{
+                                color: rgb(179, 231, 245);
+                            }
+                        }
+                        h4{
+                            color: rgba(0,0,0,0.6);
+                            font-size: 1em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .peopleDetails{
+        display: block !important;
+        padding: 20px;
+        div{
+            div.info{
+                padding-right: 0;
+                display: flex;
+                flex-direction: column;
+                img{
+                    align-self: center;
+                    width: 150px;
+                    height: 150px;
+                }
+                div.iconInfo{
+                    align-self: center;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .peopleDetails{
+        display: block !important;
+        padding: 20px;
+        div{
+            div.info{
+                padding-right: 0;
+                display: flex;
+                flex-direction: column;
+                img{
+                    align-self: center;
+                    width: 150px;
+                    height: 150px;
+                }
+                div.iconInfo{
+                    align-self: center;
+                }
+            }
+        }
+    }
+}

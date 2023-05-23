@@ -1,0 +1,117 @@
+footer{
+    min-height: 200px;
+    background-color: #032540;
+    display: flex;
+    justify-content: center;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    div:not(.legal){
+        margin-right: 40px;
+    }
+    ul{
+        padding-left: 0;
+        margin-bottom: 0;
+        li{
+            color: white;
+            list-style: none;
+            h3{
+                font-weight: bold; 
+                font-size: 1.2em;
+            }
+            a{
+                text-decoration: none;
+                color: white;
+                font-size: 1em;
+            }    
+        }
+    }
+    .join{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        img{
+            position: relative;
+
+            top: -36px;
+            height: 94px;
+            width: 130px;
+        }
+        button{
+            border-radius: 5px;
+            font-weight: bold;
+            padding: 8px 16px;
+            border: none;
+            color: #01B4E4;
+            font-size: 1.1em;
+        }
+    }
+    .basic{
+        display: flex;
+        justify-content: center;
+    }
+    .involved{
+        height: 144px;
+        display: flex;
+        justify-content: center;
+
+    }
+    .community{
+        display: flex;
+        height: 144px;
+        justify-content: center;
+
+    }
+    .legal{
+        height: 144px;
+        display: flex;
+        justify-content: center;
+
+    }
+}
+
+@media only screen and (max-width: 767px){
+    footer{
+        display: block;
+        div{
+            margin-right: 0 !important;
+        }
+        .join{
+            margin-bottom: 20px;
+            img{
+                position: unset;
+                margin-bottom: 20px;
+            }
+
+        }
+        .basic{
+            margin-bottom: 20px;
+        }
+        .involved{
+            height: auto;
+             margin-bottom: 20px;
+        }
+        .community{
+            height: auto;
+             margin-bottom: 20px;
+             margin-right: 25px !important;
+        }
+        .legal{
+            height: auto;
+             margin-bottom: 20px;
+             margin-right: 25px !important;
+        }
+    }
+}
+
+@media screen and (min-width: 767px) and (max-width: 1023px) {
+    footer{
+        padding-left: 20px;
+        padding-right: 20px;
+        .join{
+            button{
+                font-size: 0.85em;
+            }
+        }
+    }
+}

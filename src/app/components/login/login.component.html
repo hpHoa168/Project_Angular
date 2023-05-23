@@ -1,0 +1,30 @@
+<div class="backgroundLogin">
+    <form class="login" >
+        <h2 >Login</h2>
+        <div class="mb-3">
+            <label for="username" class="form-label" >Email address</label>
+            <input type="text" class="form-control" id="username" value="{{userName}}" placeholder="User name">
+        </div>
+        <!-- <input type="text" value="{{userName}}" placeholder="User name"> -->
+        <div class="mb-3">
+            <label for="password" class="form-label" >Email address</label>
+            <input type="password" class="form-control" id="password" value="{{password}}" placeholder="Password">
+        </div>
+        <!-- <input type="password" value="{{password}}" placeholder="Pass word"> -->
+              <div *ngIf="loginFailed" class="message">
+              {{ loginFailed }}
+            </div>
+        <button class="login btn btn-primary btnLogin" (click)="checkLogin()">Login</button>
+        <button class="btn btn-primary btnLogin" (click)="demoLogin()">Demo Account</button>
+        <!-- <img src="../../../assets/image/icons8-facebook-48.png" alt="" >
+        <img src="../../../assets/image/icons8-instagram-48.png" alt="" >
+        <img src="../../../assets/image/icons8-google-48.png" alt=""> -->
+    
+       
+    </form>
+</div>
+
+
+
+  
+

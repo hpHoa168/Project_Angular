@@ -1,0 +1,258 @@
+<main class="home">
+    <div class="load-container" *ngIf="isLoad[0]">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <section class="welcome new_index">
+        <div class="welcome-content">
+            <div class="title">
+                <h1>Welcome.</h1>
+                <h2>Millions of movies, TV shows and people to discover. Explore now.</h2>
+            </div>
+            <div class="search">
+                <form (ngSubmit)="onSubmit()">
+                    <label for=""><input type="text" name="search" [placeholder]="screenWidth < 484 ? 'Search...' :'Search for a movie, tv show, person......'" [(ngModel)]="searchWord" ></label>
+                    <input type="submit" value="Search"  >
+                </form>
+            </div>
+        </div>
+    </section>
+    <section class="trending">
+        <div class="trending-content">
+            <div class="header-trending">
+                <h2>Trending</h2>
+                <div>
+                    <div class="type-trending">
+                        <div class="today-trending" [ngClass]="{'selected': selected === true}">
+                            <a class="today" [routerLink]=[] (click)="getThisDay()">Today</a>
+                            <div class="background"></div>
+                        </div>
+                        <div class="week-trending" [ngClass]="{'selected': selected === false}">
+                            <a class= "week" [routerLink]=[] (click)="getThisWeek()">This Week</a>
+                            <div class="background"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-trending">
+                <div class="main-trending-content">
+                    <div class="card-trending" *ngFor="let item of data">
+                        <div class="image-card" *ngIf="!isLoad[1]">
+                            <a [routerLink]="['/movie/' + item.id]"><img src="{{'https://www.themoviedb.org/t/p/w220_and_h330_face/' + item.poster_path}}" alt="background" title="{{item.title ? item.title : item.name}}"></a>
+                            <div class="circle-progress">
+                                <circle-progress
+                                [percent]="item.vote_average * 10"
+                                [outerStrokeColor]=" item.vote_average * 10 > 70 ? '#21D07A' : item.vote_average * 10 < 40 ? '#DB2360': item.vote_average * 10 === 0 ? '#666666' :'#D2D531'"
+                                [innerStrokeColor]="item.vote_average * 10 > 70 ? '#204529' : item.vote_average * 10 < 40 ? '#571435': item.vote_average * 10 === 0 ? '#666666' :'#423D0F'" 
+                              ></circle-progress>
+                            </div>
+                        </div>
+                        <div class="image-card" *ngIf="isLoad[1]">
+                            <ngx-skeleton-loader
+                            count="1"
+                            appearance="circle"
+                            [theme]="{
+                              width: '150px',
+                              height: '225px',
+                              'border-radius': '5px',
+                              'margin': '0'
+                            }"
+                          >
+                          </ngx-skeleton-loader>
+                        </div>
+
+                        <div class="content-card" *ngIf="!isLoad[1]" > 
+                            <a routerLink="/#">{{item.title ? item.title : item.name}}</a>
+                            <h4>{{item.release_date ? item.release_date : item.first_air_date}}</h4>
+                        </div>
+                        <div class="content-card" *ngIf="isLoad[1]" > 
+                            <ngx-skeleton-loader
+                            count="1"
+                            appearance="circle"
+                            [theme]="{
+                              width: '130px',
+                              height: '20px',
+                              'border-radius': '5px',
+                              'margin': '0'
+                            }"
+                          >
+                          </ngx-skeleton-loader>
+                          <ngx-skeleton-loader
+                            count="1"
+                            appearance="circle"
+                            [theme]="{
+                              width: '50px',
+                              height: '20px',
+                              'border-radius': '5px',
+                              'margin': '0'
+                            }"
+                          >
+                          </ngx-skeleton-loader>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section class="trailer" [ngStyle]="{ 'background-image': backgroundImage }" >
+        <div class="trailer-content">
+            <div class="header-trailer">
+                <h2>Latest Trailers</h2>
+                <div>
+                    <div class="type-trailer">
+                        <div class="tv-trailer" [ngClass]="{'selected': selectedTrailer === true}">
+                            <a class="tv" [routerLink]=[] (click)="getTrailerTV()">On TV</a>
+                            <div class="background"></div>
+                        </div>
+                        <div class="theater-trailer" [ngClass]="{'selected': selectedTrailer === false}">
+                            <a class= "theater" [routerLink]=[] (click)="getTrailerMovie()">In Theaters</a>
+                            <div class="background"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-trailer">
+                <div class="main-trailer-content">
+                    <div class="trailer-card" *ngFor="let item of trailer; index as i">
+                        <div class="image-card" *ngIf="!isLoad[2]" title="{{item.title ? item.title : item.original_name}}" (mouseover)="setHovered('https://www.themoviedb.org/t/p/w355_and_h200_multi_faces/' + item.backdrop_path)" (click)="openTrailer(item.id, trailerType)">
+                            <a routerLink="/#" ><img src="{{'https://www.themoviedb.org/t/p/w355_and_h200_multi_faces/' + item.backdrop_path}}" alt="background" ></a>
+                            <div class="play">
+                                <span class="icon-play"></span>
+                            </div>
+                        </div>
+                        <div class="image-card" *ngIf="isLoad[2]">
+                            <ngx-skeleton-loader
+                            count="1"
+                            appearance="circle"
+                            [theme]="{
+                              width: '300px',
+                              height: '168.54px',
+                              'border-radius': '5px',
+                              'margin': '0'
+                            }"
+                          >
+                          </ngx-skeleton-loader>
+                        </div>
+                        <div class="content-card" *ngIf="!isLoad[2]">
+                            <a [routerLink]="['/' + trailerType + '/' + item.id]">{{item.original_name ? item.original_name : item.title}}</a>
+                            <h4>{{item.first_air_date ? item.first_air_date : item.release_date}}</h4>
+                        </div>
+                        <div class="content-card" *ngIf="isLoad[2]">
+                            <ngx-skeleton-loader
+                            count="1"
+                            appearance="circle"
+                            [theme]="{
+                              width: '150px',
+                              height: '20px',
+                              'border-radius': '5px',
+                              'margin': '0'
+                            }"
+                          >
+                          </ngx-skeleton-loader>
+                          <ngx-skeleton-loader
+                            count="1"
+                            appearance="circle"
+                            [theme]="{
+                              width: '80px',
+                              height: '20px',
+                              'border-radius': '5px',
+                              'margin': '0'
+                            }"
+                          >
+                          </ngx-skeleton-loader>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="video"  *ngIf="isTrailer">
+        <div class="title-video">
+            <h2>{{trailerName}}</h2>
+            <button (click)="closeTrailer()"><img src="../../../assets/image/close.png" alt="close"></button>
+        </div>
+        <!-- <iframe [src]="id" frameborder="0" allowfullscreen *ngIf="id !== 'none'; else NoneTrailer"></iframe> -->
+        <youtube-player *ngIf="id !== 'none'; else NoneTrailer" [videoId]="id" [width]="1080" [height]="600"></youtube-player>
+        <ng-template #NoneTrailer>
+            <div class="none-video">
+                <h2>This movie doesn't have the trailer in the system</h2>
+            </div>
+        </ng-template>
+    </section>
+    <section class="popular">
+        <div class="popular-content">
+            <div class="header-popular">
+                <h2>What's Popular</h2>
+                <div>
+                    <div class="type-popular">
+                        <div class="today-popular" [ngClass]="{'selected': selectedPopular === true}">
+                            <a class="today" [routerLink]=[] (click)="getPopularTV()">On TV</a>
+                            <div class="background"></div>
+                        </div>
+                        <div class="week-popular" [ngClass]="{'selected': selectedPopular === false}">
+                            <a class= "week" [routerLink]=[] (click)="getPopularMovie()">In Theaters</a>
+                            <div class="background"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-popular">
+                <div class="main-popular-content">
+                    <div class="card-popular" *ngFor="let item of popular">
+                        <div class="image-card" *ngIf="!isLoad[3]">
+                            <a [routerLink]="['/tv/' + item.id]"><img src="{{'https://www.themoviedb.org/t/p/w220_and_h330_face/' + item.poster_path}}" alt="background" title="{{item.title ? item.title : item.name}}"></a>
+                            <div class="circle-progress">
+                                <circle-progress
+                                [percent]="item.vote_average * 10"
+                                [outerStrokeColor]=" item.vote_average * 10 > 70 ? '#21D07A' : item.vote_average * 10 < 40 ? '#DB2360': item.vote_average * 10 === 0 ? '#666666' :'#D2D531'"
+                                [innerStrokeColor]="item.vote_average * 10 > 70 ? '#204529' : item.vote_average * 10 < 40 ? '#571435': item.vote_average * 10 === 0 ? '#666666' :'#423D0F'" 
+                              ></circle-progress>
+                            </div>
+                        </div>
+                        <div class="image-card" *ngIf="isLoad[3]">
+                            <ngx-skeleton-loader
+                            count="1"
+                            appearance="circle"
+                            [theme]="{
+                              width: '150px',
+                              height: '225px',
+                              'border-radius': '5px',
+                              'margin': '0'
+                            }"
+                          >
+                          </ngx-skeleton-loader>
+                        </div>
+                        <div class="content-card" *ngIf="!isLoad[3]">
+                            <a [routerLink]="['/tv/' + item.id]">{{item.title ? item.title : item.name}}</a>
+                            <h4>{{item.release_date ? item.release_date : item.first_air_date}}</h4>
+                        </div>
+                        <div class="content-card" *ngIf="isLoad[3]">
+                            <ngx-skeleton-loader
+                            count="1"
+                            appearance="circle"
+                            [theme]="{
+                              width: '130px',
+                              height: '20px',
+                              'border-radius': '5px',
+                              'margin': '0'
+                            }"
+                          >
+                          </ngx-skeleton-loader>
+                          <ngx-skeleton-loader
+                            count="1"
+                            appearance="circle"
+                            [theme]="{
+                              width: '50px',
+                              height: '20px',
+                              'border-radius': '5px',
+                              'margin': '0'
+                            }"
+                          >
+                          </ngx-skeleton-loader>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

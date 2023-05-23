@@ -1,0 +1,131 @@
+<div class="d-flex flex-column flex-sm-row container justify-content-center">
+  <form
+    class="sort-bar flex-column"
+    (submit)="onSubmit(signInForm)"
+    #signInForm="ngForm"
+  >
+    <div class="sort shadow-sm">
+      <div class="sort-title" (click)="open('sort')">Sort
+        <i *ngIf="isOpen.sortOpen;else closeArrow" class="bi bi-caret-down float-end"></i>
+      </div>
+      <div *ngIf="isOpen.sortOpen">
+        <p>Sort Result By</p>
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          ngModel
+          name="sort"
+        >
+          <option value="0" selected>Popularity Descending</option>
+          <option [value]="i + 1" *ngFor="let item of sortArr; index as i">
+            {{ item }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="sort shadow-sm">
+      <div class="sort-title" (click)="open('title')">Filter
+         <i *ngIf="isOpen.filterOpen; else closeArrow" class="bi bi-caret-down float-end"></i>
+         <ng-template #closeArrow>
+          <i class="bi bi-caret-right float-end"></i>
+         </ng-template>
+      </div>
+      <div *ngIf="isOpen.filterOpen">
+        <div>
+          <p>Show Me</p>
+          <div class="form-check" *ngFor="let item of showMeArr; index as i">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="showMe"
+              value="{{ item }}"
+              id="flexRadioDefault{{ i }}"
+              ngModel
+            />
+            <label class="form-check-label" for="flexRadioDefault{{ i }}">
+              {{ item }}
+            </label>
+          </div>
+        </div>
+        <div>
+          <p>Genres</p>
+          <div class="form-check" *ngFor="let item of popularGenres">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="{{ item.name }}"
+              id="{{ item.id }}"
+              ngModel
+              name="{{ item.id }}"
+            />
+            <label class="form-check-label" for="{{ item.id }}">
+              {{ item.name }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isOpen.sortOpen || isOpen.filterOpen">
+      <button class="w-100 bg-info p-2">Search</button>
+    </div>
+  </form>
+  <div class="w-100">
+    <div class="row p-0 m-0 justify-content-center">
+      <div
+        class="col-sm-6 col-lg-4 col-xl-3 p-3 d-flex justify-content-center item-movie"
+        *ngFor="let item of popularMovie"
+      >
+        <a [routerLink]="item.title ? ['/movie', item.id] :['/tv', item.id] " class="shadow">
+          <img
+            *ngIf="item.poster_path; else elseBlock"
+            src="https://www.themoviedb.org/t/p/w220_and_h330_face/{{
+              item.poster_path
+            }}"
+            alt="image"
+          />
+          <ng-template #elseBlock>
+            <img
+              src="https://www.prokerala.com/movies/assets/img/no-poster-available.jpg"
+              alt="image"
+            />
+          </ng-template>
+          <div class="circle-progress">
+            <circle-progress class="circle-progress-class" [percent]="item.vote_average * 10"
+              [outerStrokeColor]=" item.vote_average * 10 > 70 ? '#21D07A' : item.vote_average * 10 < 40 ? '#DB2360': item.vote_average * 10 === 0 ? '#666666' :'#D2D531'"
+              [innerStrokeColor]="item.vote_average * 10 > 70 ? '#204529' : item.vote_average * 10 < 40 ? '#571435': item.vote_average * 10 === 0 ? '#666666' :'#423D0F'"></circle-progress>
+          </div>
+          <div class="title h-100">
+            <div class="text-break movie-name">
+              {{ item.title || item.name }}
+            </div>
+            <div class="date">
+              {{ item.release_date || item.first_air_date }}
+            </div>
+          </div>
+        </a>
+      </div>
+      <ng-container *ngIf="page != 1 && page < 1000">
+        <div
+          class="col-sm-6 col-lg-4 col-xl-3 p-3 d-flex justify-content-center loading"
+          *ngFor="let item of numSequence(12)"
+        >
+          <div class="">
+            <div class="spinner-grow text-secondary ske-loading" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <div
+        *ngIf="page == 1 && popularMovie?.length >= 20"
+        class="d-flex justify-content-center w-100"
+      >
+        <button (click)="loadMore()" class="w-100 bg-info m-2 p-2">
+          Load More
+        </button>
+      </div>
+    </div>
+  </div>
+  <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+</div>
